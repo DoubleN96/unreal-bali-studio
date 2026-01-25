@@ -1,4 +1,5 @@
-import React from 'react';
+import { useState } from 'react';
+import { supabase } from '../supabaseClient';
 
 const Contact = () => {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -13,6 +14,7 @@ const Contact = () => {
             setStatus('success');
             setFormData({ name: '', email: '', message: '' });
         } catch (err) {
+            console.error('Error sending message:', err);
             alert('Error al enviar el mensaje. Inténtalo de nuevo.');
             setStatus('idle');
         }
