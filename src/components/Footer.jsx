@@ -35,7 +35,8 @@ const Footer = () => {
                                 { name: 'Inicio', path: '/' },
                                 { name: 'Proyectos', path: '/proyectos' },
                                 { name: 'Journal', path: '/blog' },
-                                { name: 'Contacto', path: '/contacto' }
+                                { name: 'Contacto', path: '/contacto' },
+                                { name: 'Portal Inversor', path: '/admin' }
                             ].map(link => (
                                 <li key={link.path}>
                                     <Link to={link.path} className="text-primary/60 hover:text-primary transition-colors text-sm font-bold uppercase tracking-widest">{link.name}</Link>

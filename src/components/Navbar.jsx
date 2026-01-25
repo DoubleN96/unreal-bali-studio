@@ -52,7 +52,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-4 md:gap-6">
                     <div className="relative group hidden sm:block">
                         <select 
                             value={currency} 
@@ -65,6 +65,11 @@ const Navbar = () => {
                         </select>
                         <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[14px] pointer-events-none text-primary/40">expand_more</span>
                     </div>
+                    
+                    <Link to="/admin" className="w-10 h-10 rounded-full border border-primary/10 flex items-center justify-center text-primary/40 hover:text-primary hover:bg-white transition-all group">
+                        <span className="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">lock_open</span>
+                    </Link>
+
                     <Link 
                         to="/contacto" 
                         className="bg-primary text-white px-6 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl"
