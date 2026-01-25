@@ -4,9 +4,10 @@
 
 @layer base {
   html {
-    font-family: 'Space Grotesk', 'Google Sans Text', sans-serif;
+    font-family: 'Manrope', sans-serif;
     scroll-behavior: smooth;
-    background-color: #050505;
+    background-color: #F3E5D8;
+    color: #3F2305;
   }
 }
 

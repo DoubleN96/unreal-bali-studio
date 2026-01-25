@@ -8,11 +8,12 @@ export default {
     extend: {
       colors: {
         primary: "#80f20d",
-        almond: "#f7f8f5",
+        almond: "#F3E5D8",
+        dark: "#3F2305",
       },
       fontFamily: {
-        sans: ['"Google Sans Text"', 'sans-serif'],
-        serif: ['"Space Grotesk"', 'sans-serif'],
+        sans: ['"Manrope"', 'sans-serif'],
+        serif: ['"DM Serif Display"', 'serif'],
         montserrat: ['"Montserrat"', 'sans-serif'],
       },
     },
