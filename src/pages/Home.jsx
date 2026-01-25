@@ -54,8 +54,9 @@ const Home = () => {
                 <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-transform duration-[15s] hover:scale-110 grayscale-[0.2]" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&q=80&w=2000')" }}></div>
                 <div className="absolute inset-0 bg-almond/60 z-10"></div>
                 <div className="relative z-20 container mx-auto flex flex-col items-center text-center max-w-5xl animate-in fade-in slide-in-from-bottom-10 duration-1000">
+                    <img src="/assets/logo.jpg" alt="Stratoma AI" className="w-24 h-24 rounded-full object-cover mb-8 border-4 border-white shadow-2xl animate-float" />
                     <span className="inline-block px-4 py-1.5 mb-8 rounded-full bg-primary text-white text-[10px] font-bold tracking-[0.3em] uppercase shadow-xl">
-                        UNREAL STUDIO MADRID
+                        STRATOMA AI GROUP
                     </span>
                     <h1 className="text-6xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tighter mb-10 text-primary font-serif italic">
                         Invierte en <br/>

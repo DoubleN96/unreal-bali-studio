@@ -145,8 +145,9 @@ const AdminDashboard = () => {
             <aside className="w-full md:w-72 border-r border-primary/5 flex flex-col p-6 md:p-8 md:sticky md:top-0 md:h-screen bg-white shadow-2xl z-20 overflow-hidden">
                 <div className="flex items-center justify-between md:flex-col md:items-start md:mb-16 px-2">
                     <div className="flex items-center gap-3">
-                        <span className="text-primary text-xl md:text-2xl font-black tracking-tighter">UNREAL</span>
-                        <span className="text-primary/30 text-xl md:text-2xl font-light">CMS</span>
+                        <img src="/assets/logo.jpg" alt="Logo" className="w-8 h-8 rounded-full object-cover" />
+                        <span className="text-primary text-xl md:text-2xl font-black tracking-tighter">STRATOMA</span>
+                        <span className="text-primary/30 text-xl md:text-2xl font-light">AI</span>
                     </div>
                     <button onClick={handleLogout} className="md:hidden text-red-600 font-black text-[10px] uppercase tracking-widest">Salir</button>
                 </div>

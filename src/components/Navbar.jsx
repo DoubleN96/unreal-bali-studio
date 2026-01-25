@@ -32,9 +32,12 @@ const Navbar = () => {
         <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled || mobileMenuOpen ? 'bg-white py-4 shadow-xl' : 'bg-transparent py-8'}`}>
             <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
                 {/* Brand */}
-                <Link to="/" className="flex items-baseline leading-none group z-50">
-                    <span className="text-primary text-2xl md:text-3xl font-black tracking-tighter transition-colors">UNREAL</span>
-                    <span className={`text-2xl md:text-3xl font-light ml-1 transition-colors ${scrolled || mobileMenuOpen ? 'text-gray-400' : 'text-primary/40'}`}>Studio</span>
+                <Link to="/" className="flex items-center gap-3 group z-50">
+                    <img src="/assets/logo.jpg" alt="Stratoma AI" className="w-10 h-10 rounded-full object-cover border border-primary/10 shadow-lg group-hover:scale-110 transition-transform duration-300" />
+                    <div className="flex items-baseline leading-none">
+                        <span className="text-primary text-xl md:text-2xl font-black tracking-tighter transition-colors">STRATOMA</span>
+                        <span className={`text-xl md:text-2xl font-light ml-1 transition-colors ${scrolled || mobileMenuOpen ? 'text-gray-400' : 'text-primary/40'}`}>AI</span>
+                    </div>
                 </Link>
 
                 {/* Desktop Menu */}
