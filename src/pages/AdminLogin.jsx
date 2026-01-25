@@ -24,7 +24,7 @@ const AdminLogin = () => {
 
             if (data.user) {
                 localStorage.setItem('_ust_sh_', data.session.access_token);
-                navigate('/admin/dashboard');
+                navigate('/admin');
             }
         } catch (err) {
             setError(err.message || 'Error al iniciar sesión');
