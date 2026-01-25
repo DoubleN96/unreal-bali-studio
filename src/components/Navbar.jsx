@@ -25,6 +25,9 @@ const Navbar = () => {
     // Close menu on route change
     useEffect(() => setMenuOpen(false), [location]);
 
+    const isAdminPath = location.pathname.startsWith('/admin');
+    if (isAdminPath) return null;
+
     return (
         <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled || mobileMenuOpen ? 'bg-white py-4 shadow-xl' : 'bg-transparent py-8'}`}>
             <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
