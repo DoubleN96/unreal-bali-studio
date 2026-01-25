@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
@@ -9,10 +9,11 @@ const Blog = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const { data } = await supabase
+                const { data, error } = await supabase
                     .from('blogs')
                     .select('*')
                     .order('date', { ascending: false });
+                
                 if (data) setBlogs(data);
             } catch (err) {
                 console.error('Error fetching blogs:', err);
@@ -23,34 +24,36 @@ const Blog = () => {
         fetchBlogs();
     }, []);
 
-    if (loading) return <div className="min-h-screen bg-[#050505] flex items-center justify-center text-[#80f20d]">Loading Journal...</div>;
+    if (loading) return <div className="min-h-screen bg-almond flex items-center justify-center text-primary font-black uppercase text-xs tracking-widest">Cargando Journal...</div>;
 
     return (
-        <div className="bg-[#F3E5D8] min-h-screen pt-32 pb-32 px-6 md:px-12 font-serif selection:bg-[#80f20d] selection:text-[#3F2305]">
+        <div className="bg-almond min-h-screen pt-40 pb-40 px-6 md:px-12 font-sans selection:bg-primary selection:text-white">
             <div className="max-w-7xl mx-auto">
-                <header className="text-center mb-24 max-w-3xl mx-auto">
-                    <span className="text-[#3F2305]/60 text-[10px] font-bold uppercase tracking-[0.4em] mb-6 block font-sans">Insights & Analysis</span>
-                    <h1 className="text-6xl md:text-8xl text-[#3F2305] font-bold mb-8 tracking-tighter">The Journal</h1>
-                    <p className="text-lg text-[#3F2305]/60 font-light leading-relaxed font-sans">
+                <header className="text-center mb-32 max-w-4xl mx-auto">
+                    <span className="text-primary/40 text-[10px] font-bold uppercase tracking-[0.5em] mb-8 block italic">INSIGHTS & ANALYSIS</span>
+                    <h1 className="text-7xl md:text-9xl text-primary font-black mb-10 tracking-tighter font-serif italic leading-[0.85]">The Journal</h1>
+                    <p className="text-xl md:text-2xl text-primary/60 font-medium leading-relaxed max-w-2xl mx-auto">
                         Deep dives into the Bali real estate market, architectural trends, and offshore investment strategies.
                     </p>
                 </header>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-32">
                     {blogs.map((post) => (
                         <Link key={post.id} to={`/blog/${post.id}`} className="group cursor-pointer flex flex-col text-left">
-                            <div className="aspect-[4/3] rounded-3xl overflow-hidden mb-8 relative shadow-xl">
+                            <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden mb-10 relative shadow-2xl grayscale transition-all duration-700 group-hover:grayscale-0">
                                 <img src={post.image} alt={post.title} className="w-full h-full object-cover transition duration-1000 group-hover:scale-110" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                             </div>
-                            <div className="flex flex-col items-start">
-                                <div className="flex items-center gap-4 mb-4 font-sans">
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#80f20d] bg-[#3F2305] px-2 py-0.5 rounded">{post.tag}</span>
-                                    <span className="w-1 h-1 rounded-full bg-[#3F2305]/20"></span>
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#3F2305]/40">{new Date(post.date).toLocaleDateString()}</span>
+                            <div className="flex flex-col items-start px-2">
+                                <div className="flex items-center gap-6 mb-6">
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white bg-primary px-3 py-1 rounded-full shadow-lg">{post.tag}</span>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary/30">{new Date(post.date).toLocaleDateString()}</span>
                                 </div>
-                                <h2 className="text-2xl font-bold text-[#3F2305] mb-4 leading-tight group-hover:text-[#80f20d] transition-colors">{post.title}</h2>
-                                <p className="text-[#3F2305]/60 font-light leading-relaxed line-clamp-3 font-sans">{post.description}</p>
+                                <h2 className="text-3xl font-black text-primary mb-6 leading-tight group-hover:text-primary/70 transition-colors font-serif italic">{post.title}</h2>
+                                <p className="text-primary/60 font-medium leading-relaxed line-clamp-3 mb-8">{post.description}</p>
+                                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary group-hover:gap-4 transition-all">
+                                    Leer Más <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                </div>
                             </div>
                         </Link>
                     ))}

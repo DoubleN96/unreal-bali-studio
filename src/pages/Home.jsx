@@ -38,7 +38,6 @@ const Home = () => {
         return projects.find(p => p.is_featured) || projects[0];
     }, [projects]);
 
-    const activeListingsCount = useMemo(() => projects.length, [projects]);
     const avgROI = useMemo(() => {
         if (!projects.length) return "14.2%";
         const rois = projects.map(p => parseFloat(p.roi)).filter(r => !isNaN(r));
@@ -46,159 +45,166 @@ const Home = () => {
         return (rois.reduce((a, b) => a + b, 0) / rois.length).toFixed(1) + "%";
     }, [projects]);
 
+    if (loading) return <div className="min-h-screen bg-almond flex items-center justify-center text-primary font-bold tracking-widest uppercase text-xs">Cargando Experiencia...</div>;
+
     return (
-        <div className="bg-[#F3E5D8] text-[#3F2305] selection:bg-[#80f20d] selection:text-[#3F2305] overflow-x-hidden antialiased font-sans">
+        <div className="bg-almond text-dark selection:bg-primary selection:text-white overflow-x-hidden antialiased font-sans">
             {/* Hero Section */}
-            <header className="relative w-full h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-transform duration-[10s] hover:scale-110" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&q=80&w=2000')" }}></div>
-                <div className="absolute inset-0 bg-[#F3E5D8]/40 z-10"></div>
-                <div className="relative z-20 container mx-auto px-6 flex flex-col items-center text-center max-w-4xl pt-20 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-                    <span className="inline-block px-3 py-1 mb-6 rounded-full bg-white/80 backdrop-blur-sm border border-white/20 text-xs font-bold tracking-wider uppercase text-[#3F2305]">
-                        Exclusive Presale Live
+            <header className="relative w-full h-[95vh] min-h-[700px] flex items-center justify-center overflow-hidden px-6">
+                <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-transform duration-[15s] hover:scale-110 grayscale-[0.2]" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&q=80&w=2000')" }}></div>
+                <div className="absolute inset-0 bg-almond/60 z-10"></div>
+                <div className="relative z-20 container mx-auto flex flex-col items-center text-center max-w-5xl animate-in fade-in slide-in-from-bottom-10 duration-1000">
+                    <span className="inline-block px-4 py-1.5 mb-8 rounded-full bg-primary text-white text-[10px] font-bold tracking-[0.3em] uppercase shadow-xl">
+                        UNREAL STUDIO MADRID
                     </span>
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tighter mb-8 text-[#3F2305] font-serif">
-                        THE FUTURE OF <br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3F2305] to-[#3F2305]/60">BALI LIVING</span>
+                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tighter mb-10 text-primary font-serif italic">
+                        Invierte en <br/>
+                        <span className="opacity-80">Bali</span>
                     </h1>
-                    <p className="text-lg md:text-xl text-[#3F2305]/80 max-w-2xl mb-10 font-light leading-relaxed">
-                        High-yield luxury real estate investment in the heart of Indonesia. Experience unreal returns with buttery smooth management.
+                    <p className="text-xl md:text-2xl text-primary/70 max-w-2xl mb-12 font-medium leading-relaxed">
+                        Genera hasta un <span className="text-primary font-black">28% anual</span> a coste directo de desarrollador con nuestro estudio propio de arquitectura.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-                        <a href="https://wa.me/6285217790692" target="_blank" rel="noopener noreferrer" className="h-14 px-8 rounded-full bg-[#80f20d] text-[#3F2305] text-base font-bold flex items-center justify-center gap-3 hover:shadow-[0_0_20px_rgba(128,242,13,0.4)] transition-all duration-300">
-                            <span className="material-symbols-outlined">chat</span>
-                            Inquire via WhatsApp
-                        </a>
-                        <Link to="/proyectos" className="h-14 px-8 rounded-full bg-white/80 backdrop-blur-md border border-black/10 text-[#3F2305] text-base font-bold flex items-center justify-center gap-3 hover:bg-white transition-all duration-300">
-                            View Assets
+                    <div className="flex flex-col sm:flex-row gap-6 w-full justify-center">
+                        <Link to="/contacto" className="h-16 px-10 rounded-full bg-primary text-white text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-3 hover:scale-105 transition-all duration-300 shadow-2xl">
+                            Agendar Llamada <span className="material-symbols-outlined text-sm">calendar_month</span>
+                        </Link>
+                        <Link to="/proyectos" className="h-16 px-10 rounded-full bg-white text-primary text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-primary hover:text-white transition-all duration-300 shadow-xl border border-primary/5">
+                            Ver Propiedades
                         </Link>
                     </div>
                 </div>
-                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce">
-                    <span className="material-symbols-outlined text-[#3F2305]/50 text-3xl">keyboard_arrow_down</span>
+                <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+                    <span className="material-symbols-outlined text-primary/30 text-4xl font-light">expand_more</span>
                 </div>
             </header>
 
-            {/* ROI Dashboard Section */}
-            <section className="py-20 bg-white/50 border-y border-[#3F2305]/5" id="roi">
-                <div className="container mx-auto px-6">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                        <div className="text-left">
-                            <h2 className="text-4xl font-bold mb-2 font-serif text-[#3F2305]">Market Performance</h2>
-                            <p className="text-[#3F2305]/60">Real-time data from our managed portfolio in Canggu & Uluwatu.</p>
+            {/* Market Performance Section (Almond to White transition) */}
+            <section className="py-32 md:py-48 bg-white border-y border-primary/5" id="roi">
+                <div className="container mx-auto px-6 max-w-7xl">
+                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 gap-10">
+                        <div className="text-left max-w-2xl">
+                            <span className="text-primary/40 text-[10px] font-bold uppercase tracking-[0.4em] mb-4 block">DATA-DRIVEN INVESTMENT</span>
+                            <h2 className="text-5xl md:text-7xl font-bold mb-6 font-serif text-primary">Market Performance</h2>
+                            <p className="text-primary/60 text-lg md:text-xl font-medium leading-relaxed">Bali continúa desafiando las tendencias globales con ocupaciones superiores al 90% en activos gestionados profesionalmente.</p>
                         </div>
-                        <button className="text-[#3F2305] hover:text-[#80f20d] flex items-center gap-2 text-sm font-bold transition-colors">
-                            Download Full Report <span className="material-symbols-outlined text-lg">download</span>
+                        <button className="text-primary hover:scale-105 flex items-center gap-3 text-xs font-black uppercase tracking-widest transition-all border-b-2 border-primary/20 pb-2">
+                            Descargar Reporte 2024 <span className="material-symbols-outlined text-lg">download</span>
                         </button>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {[
                             { label: 'Avg. Annual Yield', value: avgROI, icon: 'trending_up', sub: '+2.4% vs last year' },
                             { label: 'Occupancy Rate', value: '92%', icon: 'calendar_month', sub: 'Year-round average' },
                             { label: 'Capital Growth', value: '22%', icon: 'currency_exchange', sub: 'Land appreciation' },
                             { label: 'Total Managed', value: '$42M+', icon: 'verified', sub: 'Assets under mgmt' }
                         ].map((stat, i) => (
-                            <div key={i} className="bg-white/80 backdrop-blur-md border border-black/5 p-8 rounded-2xl group hover:border-[#80f20d]/50 transition-all duration-300 relative overflow-hidden text-left shadow-sm">
-                                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
-                                    <span className="material-symbols-outlined text-[#3F2305] text-4xl">{stat.icon}</span>
+                            <div key={i} className="bg-almond/30 border border-primary/5 p-10 rounded-[2rem] group hover:bg-white hover:shadow-2xl transition-all duration-500 relative overflow-hidden text-left shadow-sm">
+                                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity">
+                                    <span className="material-symbols-outlined text-primary text-5xl">{stat.icon}</span>
                                 </div>
-                                <p className="text-[#3F2305]/50 text-sm font-medium uppercase tracking-wider mb-2">{stat.label}</p>
-                                <div className="text-5xl font-bold text-[#3F2305] mb-2 group-hover:text-[#80f20d] transition-colors">{stat.value}</div>
-                                <p className="text-xs text-[#3F2305]/40">{stat.sub}</p>
+                                <p className="text-primary/40 text-[9px] font-bold uppercase tracking-widest mb-4 font-sans">{stat.label}</p>
+                                <div className="text-5xl font-black text-primary mb-3 font-serif italic">{stat.value}</div>
+                                <p className="text-[10px] text-primary/50 font-bold uppercase tracking-wider">{stat.sub}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Featured Assets */}
-            <section className="py-24 container mx-auto px-6" id="featured">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 text-left">
-                    <h2 className="text-4xl md:text-5xl font-bold text-[#3F2305] font-serif">Featured Assets</h2>
-                    <div className="flex gap-2 mt-4 md:mt-0">
-                        <Link to="/proyectos" className="text-[#3F2305] font-bold text-sm flex items-center gap-2 hover:underline">
-                            View All <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                        </Link>
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projects.slice(0, 3).map((proj) => (
-                        <Link key={proj.id} to={`/proyecto/${proj.id}`} className="group relative rounded-2xl overflow-hidden aspect-[4/5] cursor-pointer block shadow-xl">
-                            <img className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={proj.image} alt={proj.name} />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
-                            <div className="absolute top-4 left-4">
-                                <span className="bg-[#80f20d] text-[#3F2305] text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">{proj.status}</span>
-                            </div>
-                            <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                                <div className="bg-white/95 backdrop-blur-md border border-black/5 p-5 rounded-xl text-left">
-                                    <h3 className="text-2xl font-bold mb-1 text-[#3F2305] font-serif">{proj.name}</h3>
-                                    <p className="text-[#3F2305]/60 text-sm mb-4">{proj.location} • {proj.property_type}</p>
-                                    <div className="flex justify-between items-center border-t border-black/5 pt-4">
-                                        <div>
-                                            <p className="text-xs text-[#3F2305]/50 uppercase">Starting Price</p>
-                                            <p className="font-bold text-lg text-[#3F2305]">{formatPrice(proj.base_price, 'USD')}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-xs text-[#3F2305]/50 uppercase">Proj. ROI</p>
-                                            <p className="font-bold text-lg text-[#80f20d]">{proj.roi}</p>
-                                        </div>
+            {/* Featured Asset (Focus on high-end editorial) */}
+            {featuredProject && (
+                <section className="py-32 md:py-48 bg-almond">
+                    <div className="container mx-auto px-6 max-w-7xl">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                            <div className="lg:col-span-7 group relative">
+                                <div className="aspect-[16/10] rounded-[2.5rem] overflow-hidden shadow-3xl relative">
+                                    <img src={featuredProject.image} className="w-full h-full object-cover transition-transform duration-[10s] group-hover:scale-110" alt={featuredProject.name} />
+                                    <div className="absolute inset-0 bg-celeste/20 mix-blend-overlay"></div>
+                                    <div className="absolute top-8 left-8">
+                                        <span className="bg-primary text-white text-[9px] font-black px-5 py-2.5 rounded-full uppercase tracking-[0.2em] shadow-2xl">PROYECTO DESTACADO</span>
                                     </div>
                                 </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </section>
-
-            {/* Investment Process Timeline */}
-            <section className="py-24 bg-white/30 overflow-hidden" id="process">
-                <div className="container mx-auto px-6">
-                    <h2 className="text-4xl font-bold mb-16 text-center text-[#3F2305] font-serif">Seamless Investment Process</h2>
-                    <div className="relative">
-                        <div className="hidden md:block absolute top-12 left-0 right-0 h-0.5 bg-black/5 z-0"></div>
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-                            {[
-                                { icon: 'travel_explore', title: 'Select Asset', desc: 'Browse our curated collection of off-plan and turnkey properties.' },
-                                { icon: 'gavel', title: 'Legal Securement', desc: 'Sign the PMA-backed contracts. We handle all notary and due diligence.' },
-                                { icon: 'payments', title: 'Fund Transfer', desc: 'Transfer funds securely via crypto or fiat with transparent tracking.' },
-                                { icon: 'key', title: 'Earn & Enjoy', desc: 'Receive keys or let our team generate monthly passive income for you.' }
-                            ].map((step, i) => (
-                                <div key={i} className="relative flex flex-col items-center md:items-start text-center md:text-left">
-                                    <div className="w-24 h-24 rounded-full bg-[#F3E5D8] border-2 border-black/10 flex items-center justify-center mb-6 z-10 relative group hover:border-[#80f20d] transition-colors shadow-sm">
-                                        <span className="material-symbols-outlined text-4xl text-[#3F2305] group-hover:text-[#80f20d] transition-colors">{step.icon}</span>
-                                        <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-black/10 text-[#3F2305] font-bold flex items-center justify-center text-sm group-hover:bg-[#80f20d] transition-all">0{i+1}</div>
-                                    </div>
-                                    <h3 className="text-xl font-bold mb-3 text-[#3F2305]">{step.title}</h3>
-                                    <p className="text-[#3F2305]/60 text-sm leading-relaxed max-w-xs">{step.desc}</p>
+                                <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-white rounded-full flex flex-col items-center justify-center shadow-2xl border border-primary/5 animate-in fade-in duration-1000 hidden md:flex">
+                                    <span className="text-[9px] font-bold text-primary/40 uppercase tracking-widest">Desde</span>
+                                    <span className="text-2xl font-black text-primary font-serif italic">{formatPrice(featuredProject.base_price, 'USD')}</span>
                                 </div>
-                            ))}
+                            </div>
+                            <div className="lg:col-span-5 text-left space-y-10">
+                                <h3 className="text-5xl md:text-7xl font-bold text-primary font-serif leading-[0.95] tracking-tighter italic">{featuredProject.name}</h3>
+                                <p className="text-xl text-primary/60 font-medium leading-relaxed line-clamp-4">{featuredProject.description}</p>
+                                <div className="grid grid-cols-2 gap-8 border-y border-primary/10 py-10">
+                                    <div>
+                                        <p className="text-[9px] font-bold text-primary/40 uppercase tracking-widest mb-2">Ubicación</p>
+                                        <p className="text-lg font-black text-primary">{featuredProject.location}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[9px] font-bold text-primary/40 uppercase tracking-widest mb-2">ROI Proyectado</p>
+                                        <p className="text-lg font-black text-primary">{featuredProject.roi}</p>
+                                    </div>
+                                </div>
+                                <Link to={`/proyecto/${featuredProject.id}`} className="inline-flex items-center gap-4 bg-primary text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs hover:scale-105 transition-all shadow-xl">
+                                    Explorar Activo <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                </Link>
+                            </div>
                         </div>
                     </div>
+                </section>
+            )}
+
+            {/* Asset Grid (White Background) */}
+            <section className="py-32 md:py-48 bg-white">
+                <div className="container mx-auto px-6 max-w-7xl">
+                    <div className="text-center mb-24">
+                        <span className="text-primary/40 text-[10px] font-bold uppercase tracking-[0.4em] mb-4 block">NUESTRO PORTAFOLIO</span>
+                        <h2 className="text-5xl md:text-7xl font-bold font-serif text-primary italic">Oportunidades Disponibles</h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                        {projects.map((proj) => (
+                            <Link key={proj.id} to={`/proyecto/${proj.id}`} className="group bg-white rounded-[2rem] overflow-hidden flex flex-col shadow-sm hover:shadow-2xl transition-all duration-500 border border-primary/5">
+                                <div className="aspect-square relative overflow-hidden">
+                                    <img className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={proj.image} alt={proj.name} />
+                                    <div className="absolute inset-0 bg-celeste/10 mix-blend-overlay"></div>
+                                    <div className="absolute top-6 left-6">
+                                        <span className="bg-primary/95 backdrop-blur text-white text-[8px] font-black px-4 py-2 rounded-full uppercase tracking-widest">{proj.status}</span>
+                                    </div>
+                                </div>
+                                <div className="p-10 flex flex-col items-start text-left flex-grow">
+                                    <p className="text-[9px] font-black text-primary/30 uppercase tracking-[0.2em] mb-3">{proj.location}</p>
+                                    <h3 className="text-2xl font-bold mb-6 text-primary font-serif leading-tight">{proj.name}</h3>
+                                    <div className="mt-auto w-full pt-6 border-t border-primary/5 flex justify-between items-center">
+                                        <div>
+                                            <p className="text-[8px] text-primary/40 font-bold uppercase mb-1">Inversión desde</p>
+                                            <p className="font-black text-xl text-primary">{formatPrice(proj.base_price, 'USD')}</p>
+                                        </div>
+                                        <div className="w-10 h-10 rounded-full bg-almond flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                            <span className="material-symbols-outlined text-xl">add</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
                 </div>
             </section>
 
-            {/* Journal Section */}
-            <section className="py-24 container mx-auto px-6" id="journal">
-                <div className="flex justify-between items-center mb-12">
-                    <h2 className="text-4xl font-bold text-[#3F2305] font-serif">The Journal</h2>
-                    <Link to="/blog" className="hidden md:flex items-center gap-2 text-[#3F2305] text-sm font-bold hover:underline">
-                        View All Articles <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                    </Link>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                    {blogs.map((post) => (
-                        <Link key={post.id} to={`/blog/${post.id}`} className="group cursor-pointer flex flex-col block">
-                            <div className="overflow-hidden rounded-xl mb-6 aspect-video shadow-lg">
-                                <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src={post.image} alt={post.title} />
+            {/* Why Diversify (Generous Spacing) */}
+            <section className="py-32 md:py-48 bg-almond px-6">
+                <div className="max-w-4xl mx-auto text-center space-y-12">
+                    <h2 className="text-5xl md:text-7xl font-black text-primary font-serif italic leading-[0.95]">Por qué diversificar <br/> fuera de Europa</h2>
+                    <p className="text-xl md:text-2xl text-primary/60 font-medium leading-relaxed">La presión fiscal y regulatoria limita cada vez más la rentabilidad. Te facilitamos acceso a mercados emergentes con mayor potencial y estructura profesional.</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-12">
+                        {[
+                            { icon: 'trending_down', title: '40% Below Market', desc: 'Precios directos de desarrollo sin sobrecostes.' },
+                            { icon: 'security', title: 'Safe Framework', desc: 'Marco legal claro desde nuestra sede en Madrid.' },
+                            { icon: 'public', title: 'Global Growth', desc: 'Activos en los destinos más rentables del mundo.' }
+                        ].map((item, i) => (
+                            <div key={i} className="space-y-4">
+                                <span className="material-symbols-outlined text-primary text-4xl">{item.icon}</span>
+                                <h4 className="text-lg font-black text-primary uppercase tracking-widest">{item.title}</h4>
+                                <p className="text-sm text-primary/50 font-medium leading-relaxed">{item.desc}</p>
                             </div>
-                            <div className="flex items-center gap-3 text-xs font-medium text-[#3F2305]/50 mb-3 uppercase tracking-wide">
-                                <span>{post.tag}</span>
-                                <span className="w-1 h-1 rounded-full bg-black/10"></span>
-                                <span>{new Date(post.date).toLocaleDateString()}</span>
-                            </div>
-                            <h3 className="text-xl font-bold mb-3 group-hover:text-[#80f20d] text-[#3F2305] transition-colors leading-tight font-serif">{post.title}</h3>
-                            <p className="text-[#3F2305]/60 text-sm line-clamp-3 leading-relaxed">{post.description}</p>
-                        </Link>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </section>
         </div>

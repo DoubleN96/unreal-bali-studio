@@ -2,56 +2,87 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="bg-white border-t border-gray-100 pt-24 pb-12 px-6 md:px-12 text-sm">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 mb-20 text-left">
-                <div className="col-span-1">
-                    <Link to="/" className="flex items-baseline leading-none text-primary group mb-8">
-                        <span className="text-2xl font-black uppercase tracking-tighter font-montserrat">UNREAL</span>
-                        <span className="text-2xl font-extralight ml-1 font-montserrat">Studio</span>
-                    </Link>
-                    <p className="text-primary/60 text-xs leading-relaxed max-w-xs font-medium">Inversión inmobiliaria inteligente y arquitectura premium en los destinos más rentables del mundo.</p>
-                </div>
-                <div>
-                    <h5 className="font-black text-[10px] uppercase tracking-widest text-primary mb-6">Menú</h5>
-                    <ul className="space-y-4 text-primary/50 text-[11px] font-bold uppercase tracking-wider">
-                        <li><Link className="hover:text-primary transition" to="/">Inicio</Link></li>
-                        <li><Link className="hover:text-primary transition" to="/proyectos">Proyectos</Link></li>
-                        <li><Link className="hover:text-primary transition" to="/blog">Blog</Link></li>
-                        <li><Link className="hover:text-primary transition" to="/contacto">Contacto</Link></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 className="font-black text-[10px] uppercase tracking-widest text-primary mb-6">Nuestras Sedes</h5>
-                    <ul className="space-y-4 text-primary/50 text-[11px] font-bold tracking-wider mb-8">
-                        <li>
-                            <a href="https://maps.app.goo.gl/abmGvNJzsbuM3pxr5?g_st=ic" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition">
-                                <span className="material-symbols-outlined text-sm">location_on</span> C. de San Nicolás 17, Madrid
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://maps.app.goo.gl/bnYDvKsJu7GWdUfA8?g_st=ic" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition">
-                                <span className="material-symbols-outlined text-sm">location_on</span> Jl. Pratu Rai Madra No.15, Bali
-                            </a>
-                        </li>
-                    </ul>
-                    <div className="flex space-x-6">
-                        <a href="https://wa.me/6285217790692" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-600 hover:text-white transition duration-300" aria-label="WhatsApp">
-                            <span className="material-symbols-outlined text-xl">chat</span>
-                        </a>
-                        <Link to="/contacto" className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition duration-300" aria-label="Agendar Videollamada">
-                            <span className="material-symbols-outlined text-xl">videocam</span>
+        <footer className="bg-white border-t border-primary/5 pt-32 pb-16 px-6 font-sans selection:bg-primary selection:text-white">
+            <div className="max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-24">
+                    {/* Brand Section */}
+                    <div className="md:col-span-4 space-y-10 text-left">
+                        <Link to="/" className="flex items-baseline leading-none group">
+                            <span className="text-primary text-3xl font-black tracking-tighter">UNREAL</span>
+                            <span className="text-gray-silver text-3xl font-light ml-1">Studio</span>
                         </Link>
+                        <p className="text-primary/60 font-medium leading-relaxed max-w-xs">
+                            Estudio propio de arquitectura y desarrollo inmobiliario especializado en activos de alta rentabilidad en mercados emergentes.
+                        </p>
+                        <div className="flex gap-6">
+                            {[
+                                { name: 'WhatsApp', icon: 'chat', color: '#25D366', url: 'https://wa.me/6285217790692' },
+                                { name: 'Instagram', icon: 'photo_camera', color: '#E4405F', url: 'https://instagram.com/unrealstudio' },
+                                { name: 'Email', icon: 'alternate_email', color: '#3D2817', url: 'mailto:info@unrealstudio.es' }
+                            ].map(social => (
+                                <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-primary/10 flex items-center justify-center text-primary/40 hover:text-white hover:bg-primary transition-all shadow-sm">
+                                    <span className="material-symbols-outlined text-xl">{social.icon}</span>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Navigation */}
+                    <div className="md:col-span-2 text-left">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-8 italic">Explorar</h4>
+                        <ul className="space-y-4">
+                            {[
+                                { name: 'Inicio', path: '/' },
+                                { name: 'Proyectos', path: '/proyectos' },
+                                { name: 'Journal', path: '/blog' },
+                                { name: 'Contacto', path: '/contacto' }
+                            ].map(link => (
+                                <li key={link.path}>
+                                    <Link to={link.path} className="text-primary/60 hover:text-primary transition-colors text-sm font-bold uppercase tracking-widest">{link.name}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Legal */}
+                    <div className="md:col-span-2 text-left">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-8 italic">Legal</h4>
+                        <ul className="space-y-4">
+                            {[
+                                { name: 'Privacidad', path: '/privacidad' },
+                                { name: 'Términos', path: '/terminos' },
+                                { name: 'Cookies', path: '/cookies' }
+                            ].map(link => (
+                                <li key={link.path}>
+                                    <Link to={link.path} className="text-primary/60 hover:text-primary transition-colors text-sm font-bold uppercase tracking-widest">{link.name}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Office */}
+                    <div className="md:col-span-4 text-left">
+                        <div className="bg-almond/30 p-10 rounded-[2.5rem] border border-primary/5">
+                            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6 italic">Sede Madrid</h4>
+                            <p className="text-primary font-black text-xl font-serif italic mb-4">Unreal Studio S.L.</p>
+                            <p className="text-primary/60 text-sm leading-relaxed mb-6 font-medium">
+                                Calle de Jorge Juan, 28001 Madrid, España.
+                            </p>
+                            <div className="flex items-center gap-3 text-primary font-black text-xs uppercase tracking-widest">
+                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                                Horario: 09:00 - 18:00
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-[10px] font-bold uppercase tracking-widest text-primary/30 border-t border-primary/5 pt-10">
-                <p>© 2026 Unreal Studio Madrid. Todos los derechos reservados.</p>
-                <div className="flex space-x-8 mt-6 md:mt-0">
-                    <Link className="hover:text-primary transition" to="/privacidad">Privacidad</Link>
-                    <Link className="hover:text-primary transition" to="/terminos">Términos</Link>
-                    <Link className="hover:text-primary transition flex items-center gap-1" to="/admin/login">
-                        <span className="material-symbols-outlined text-xs">settings</span> Development
-                    </Link>
+
+                <div className="pt-16 border-t border-primary/5 flex flex-col md:flex-row justify-between items-center gap-8">
+                    <p className="text-[10px] font-bold text-primary/30 uppercase tracking-[0.2em]">
+                        © {new Date().getFullYear()} Unreal Studio. Arquitectura & Inversión.
+                    </p>
+                    <p className="text-[10px] font-bold text-primary/30 uppercase tracking-[0.2em] flex items-center gap-2">
+                        Designed for <span className="text-primary">Perfect Experience</span> <span className="material-symbols-outlined text-[10px]">pentagon</span>
+                    </p>
                 </div>
             </div>
         </footer>

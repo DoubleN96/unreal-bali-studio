@@ -1,100 +1,107 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError('');
+        setError(null);
 
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error: authError } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
 
-            if (error) {
-                throw error;
-            }
+            if (authError) throw authError;
 
             if (data.user) {
-                // Store session for the ProtectedRoute check (which checks localStorage '_ust_sh_')
-                // Ideally ProtectedRoute should check supabase.auth.getSession() but for compatibility with existing code:
-                localStorage.setItem('_ust_sh_', btoa(`active_session_${data.user.id}_${Date.now()}`));
-                navigate('/admin');
+                localStorage.setItem('_ust_sh_', data.session.access_token);
+                navigate('/admin/dashboard');
             }
         } catch (err) {
-            setError(err.message || 'Access Denied. Invalid Credentials.');
-            setPassword('');
+            setError(err.message || 'Error al iniciar sesión');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6 font-serif">
-            <div className="bg-white/[0.03] backdrop-blur-xl p-10 md:p-16 rounded-[2.5rem] border border-white/10 shadow-2xl max-w-lg w-full text-center">
-                <div className="mb-12 animate-in fade-in zoom-in-95 duration-700">
-                    <span className="material-symbols-outlined text-6xl text-[#80f20d] mb-4">pentagon</span>
-                    <h1 className="text-3xl font-bold tracking-tighter text-white">UNREAL <span className="font-light">CMS</span></h1>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 mt-4">Authorized Personnel Only</p>
+        <div className="min-h-screen bg-almond flex items-center justify-center p-6 font-sans selection:bg-primary selection:text-white">
+            <div className="w-full max-w-lg">
+                <div className="text-center mb-16 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+                    <Link to="/" className="inline-flex items-center gap-3 mb-10 group">
+                        <span className="text-primary text-3xl font-black tracking-tighter">UNREAL</span>
+                        <span className="text-primary/30 text-3xl font-light">Studio</span>
+                    </Link>
+                    <span className="text-primary/40 text-[10px] font-black uppercase tracking-[0.5em] mb-4 block italic">PANEL DE CONTROL</span>
+                    <h1 className="text-5xl font-black text-primary font-serif italic">Management Login</h1>
+                </div>
+
+                <div className="bg-white rounded-[3rem] p-10 md:p-16 shadow-3xl border border-primary/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-almond rounded-bl-full opacity-50 -mr-16 -mt-16 transition-all duration-700 group-hover:w-40 group-hover:h-40"></div>
+                    
+                    <form onSubmit={handleLogin} className="space-y-10 relative z-10 text-left">
+                        {error && (
+                            <div className="bg-red-50 text-red-600 p-5 rounded-2xl text-xs font-bold border border-red-100 animate-in fade-in duration-300">
+                                {error}
+                            </div>
+                        )}
+
+                        <div className="space-y-3">
+                            <label className="text-[9px] uppercase font-black text-primary/40 tracking-[0.2em] ml-2">Email Corporativo</label>
+                            <div className="relative">
+                                <span className="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-primary/30 text-xl">alternate_email</span>
+                                <input 
+                                    type="email" 
+                                    required 
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full bg-almond/30 border-2 border-transparent rounded-2xl pl-14 pr-8 py-5 focus:border-primary/20 focus:bg-white outline-none transition-all text-primary font-bold" 
+                                    placeholder="admin@unrealstudio.com" 
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <label className="text-[9px] uppercase font-black text-primary/40 tracking-[0.2em] ml-2">Contraseña</label>
+                            <div className="relative">
+                                <span className="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-primary/30 text-xl">lock_open</span>
+                                <input 
+                                    type="password" 
+                                    required 
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full bg-almond/30 border-2 border-transparent rounded-2xl pl-14 pr-8 py-5 focus:border-primary/20 focus:bg-white outline-none transition-all text-primary font-bold" 
+                                    placeholder="••••••••" 
+                                />
+                            </div>
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            disabled={loading}
+                            className="w-full bg-primary text-white py-6 rounded-2xl font-black text-xs uppercase tracking-[0.3em] shadow-2xl hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:scale-100 transition-all duration-300 flex items-center justify-center gap-3"
+                        >
+                            {loading ? (
+                                <span className="animate-spin material-symbols-outlined">sync</span>
+                            ) : (
+                                <>Acceder al Panel <span className="material-symbols-outlined text-sm">login</span></>
+                            )}
+                        </button>
+                    </form>
                 </div>
                 
-                <form onSubmit={handleLogin} className="space-y-6">
-                    <div className="text-left space-y-2">
-                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-500 ml-1">Email</label>
-                        <input 
-                            type="email" 
-                            required 
-                            value={email}
-                            onChange={(e) => {
-                                setEmail(e.target.value);
-                                if (error) setError('');
-                            }}
-                            className="w-full px-6 py-5 rounded-2xl bg-white/5 border border-white/10 focus:border-[#80f20d] focus:ring-0 outline-none transition-all text-white font-medium placeholder:text-white/10"
-                            placeholder="admin@unrealstudio.com"
-                        />
-                    </div>
-                    <div className="text-left space-y-2">
-                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-500 ml-1">Password</label>
-                        <input 
-                            type="password" 
-                            required 
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                                if (error) setError('');
-                            }}
-                            className="w-full px-6 py-5 rounded-2xl bg-white/5 border border-white/10 focus:border-[#80f20d] focus:ring-0 outline-none transition-all text-white font-medium"
-                            placeholder="••••••••"
-                        />
-                    </div>
-
-                    {error && (
-                        <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-xl animate-shake">
-                            <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest">{error}</p>
-                        </div>
-                    )}
-
-                    <button 
-                        type="submit" 
-                        disabled={loading}
-                        className="w-full bg-[#80f20d] text-black py-5 rounded-2xl font-bold uppercase tracking-widest shadow-xl hover:brightness-110 active:scale-[0.98] transition-all duration-300 mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        {loading ? 'Authenticating...' : 'Authenticate'}
-                    </button>
-
-                    <button type="button" onClick={() => navigate('/')} className="mt-10 text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-[#80f20d] transition-colors flex items-center justify-center gap-2 mx-auto">
-                        <span className="material-symbols-outlined text-xs">arrow_back</span> Return to Site
-                    </button>
-                </form>
+                <p className="mt-12 text-primary/30 text-[9px] uppercase font-black tracking-widest text-center">
+                    Sistema de Gestión Exclusivo • Unreal Studio S.L.
+                </p>
             </div>
         </div>
     );

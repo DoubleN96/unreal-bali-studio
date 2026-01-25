@@ -7,14 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#80f20d",
-        almond: "#F3E5D8",
-        dark: "#3F2305",
+        primary: "#3D2817",
+        almond: "#EAE0D5",
+        dark: "#1A1A1A",
+        gray: {
+          light: "#A8A8A8",
+          silver: "#B8B1A8"
+        },
+        celeste: "#7AB5D6",
       },
       fontFamily: {
-        sans: ['"Manrope"', 'sans-serif'],
-        serif: ['"DM Serif Display"', 'serif'],
-        montserrat: ['"Montserrat"', 'sans-serif'],
+        sans: ['"Montserrat"', 'sans-serif'],
+        serif: ['"Playfair Display"', 'serif'],
       },
     },
   },

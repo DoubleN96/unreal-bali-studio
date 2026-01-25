@@ -4,10 +4,10 @@
 
 @layer base {
   html {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     scroll-behavior: smooth;
-    background-color: #F3E5D8;
-    color: #3F2305;
+    background-color: #EAE0D5;
+    color: #1A1A1A;
   }
 }
 
@@ -35,12 +35,17 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: #EAE0D5;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1a1a1a;
+  background: #B8B1A8;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #80f20d;
+  background: #3D2817;
+}
+
+::selection {
+  background-color: #3D2817;
+  color: #FFFFFF;
 }
