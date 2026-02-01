@@ -14,6 +14,8 @@ import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
 import { DEFAULT_CONFIG } from './constants';
 
+import Invest from './pages/Invest';
+
 const CurrencyContext = createContext(undefined);
 
 export const useCurrency = () => {
@@ -37,11 +39,14 @@ const ScrollToTop = () => {
 const Layout = ({ children }) => {
     const location = useLocation();
     const isAdminPath = location.pathname.startsWith('/admin');
+    // Hide navbar/footer for the landing page to keep it focused (like standard LPs)
+    const isLandingPage = location.pathname === '/invest'; 
+    
     return (
         <div className="flex flex-col min-h-screen">
-            {!isAdminPath && <Navbar />}
+            {(!isAdminPath && !isLandingPage) && <Navbar />}
             <main className="flex-grow">{children}</main>
-            {!isAdminPath && <Footer />}
+            {(!isAdminPath && !isLandingPage) && <Footer />}
         </div>
     );
 };
@@ -100,6 +105,7 @@ const App = () => {
                         <Route path="/" element={<Home />} />
                         <Route path="/proyectos" element={<Projects />} />
                         <Route path="/proyecto/:id" element={<ProjectDetail />} />
+                        <Route path="/invest" element={<Invest />} />
                         <Route path="/blog" element={<Blog />} />
                         <Route path="/blog/:id" element={<BlogDetail />} />
                         <Route path="/contacto" element={<Contact />} />
