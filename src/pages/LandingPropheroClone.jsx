@@ -1,55 +1,42 @@
 import React, { useState } from 'react';
 import { useCurrency } from '../App';
-import { CheckCircle, Play, ArrowRight, Star, TrendingUp, Shield, MapPin, Calendar, Users } from 'lucide-react';
+import { CheckCircle, Play, ArrowRight, Star, TrendingUp, Shield, MapPin, Calendar, Users, ChevronRight, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Componente de Formulario Reutilizable
-const LeadForm = ({ className, buttonColor = "bg-[#00c853]" }) => {
+// Componente de Formulario (Estilizado para parecer un bloque de sesión)
+const SessionForm = ({ className }) => {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        // Simulación de envío
         setTimeout(() => {
             setLoading(false);
-            alert("¡Solicitud recibida! Te enviaremos el dossier a tu WhatsApp.");
-            // Aquí iría la integración real con Supabase/CRM
-        }, 1500);
+            window.location.href = "https://wa.me/34610095844?text=Hola,%20quiero%20reservar%20mi%20sesión%20gratuita%20sobre%20Casa%20Palmers%20Melasti";
+        }, 1000);
     };
 
     return (
         <form onSubmit={handleSubmit} className={`flex flex-col gap-4 ${className}`}>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Reserva tu sesión gratuita</h3>
             <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">Nombre</label>
-                <input required type="text" placeholder="Tu nombre completo" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" />
-            </div>
-            <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">WhatsApp (con prefijo)</label>
-                <input required type="tel" placeholder="+34 600 000 000" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" />
+                <input required type="text" placeholder="Nombre completo" className="w-full p-4 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none transition" />
             </div>
             <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">Email</label>
-                <input required type="email" placeholder="tu@email.com" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" />
+                <input required type="email" placeholder="Correo electrónico" className="w-full p-4 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none transition" />
             </div>
-            <div className="flex items-start gap-2 text-xs text-gray-500 mt-2">
-                <input type="checkbox" required className="mt-1" />
-                <span>Acepto recibir información sobre oportunidades de inversión en Bali.</span>
+            <div>
+                <input required type="tel" placeholder="Teléfono (WhatsApp)" className="w-full p-4 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none transition" />
             </div>
+            
             <button 
                 type="submit" 
                 disabled={loading}
-                className={`w-full py-4 px-6 text-white font-bold text-lg rounded-lg shadow-lg hover:brightness-110 transition-all transform hover:-translate-y-1 ${buttonColor} flex justify-center items-center gap-2`}
+                className="w-full py-4 px-6 text-white font-bold text-lg rounded-lg shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all bg-[#2050f6] flex justify-center items-center gap-2"
             >
-                {loading ? 'Enviando...' : (
-                    <>
-                        SOLICITAR DOSSIER OFICIAL <ArrowRight size={20} />
-                    </>
-                )}
+                {loading ? 'Procesando...' : 'QUIERO MI SESIÓN GRATUITA'}
             </button>
-            <p className="text-center text-xs text-gray-500 flex items-center justify-center gap-1">
-                <Shield size={12} className="text-green-600" /> Datos 100% seguros y encriptados.
-            </p>
+            <p className="text-center text-xs text-gray-400 mt-2">Plazas limitadas para esta semana.</p>
         </form>
     );
 };
@@ -57,229 +44,215 @@ const LeadForm = ({ className, buttonColor = "bg-[#00c853]" }) => {
 const LandingPropheroClone = () => {
     const { formatPrice } = useCurrency();
     
-    // Colores extraídos de la referencia (Aproximación por análisis)
+    // Colores EXACTOS extraídos con Playwright
     const colors = {
-        primary: "#172554", // Azul oscuro serio
-        accent: "#2350f6",  // Azul eléctrico Prophero
-        cta: "#00c853",     // Verde conversión
-        bg: "#f9fafb",      // Gris muy claro
-        text: "#1f2937"     // Gris oscuro
+        primary: "#2050f6", // Azul Eléctrico Prophero (Botones/Acentos)
+        bgHero: "#f3f5fe",  // Azul Pálido (Fondo Hero)
+        textMain: "#000000", // Negro Puro
+        textSec: "#4b5563"   // Gris oscuro
     };
 
     return (
-        <div className="font-sans text-gray-800 bg-white selection:bg-blue-100">
-            {/* Top Bar Urgency */}
-            <div className="bg-[#172554] text-white text-center py-2 px-4 text-sm font-medium flex justify-center items-center gap-2">
-                <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded animate-pulse">CASA PALMERS EXCLUSIVE</span>
-                <span>Oportunidad Off-Market: Melasti Villas Fase Privada.</span>
+        <div className="font-sans text-black bg-white">
+            {/* Top Bar - Urgency Real */}
+            <div className="bg-[#2050f6] text-white text-center py-3 px-4 text-sm font-medium">
+                <p>🔥 <strong>Oportunidad Casa Palmers:</strong> Últimas 2 unidades en Melasti a precio inversor ($159k)</p>
             </div>
 
-            {/* Navbar Simplificado (Sin fugas) */}
-            <header className="container mx-auto px-4 py-4 flex justify-between items-center sticky top-0 bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
-                <div className="font-serif text-2xl font-bold tracking-tighter text-[#3D2817]">
-                    UNREAL<span className="text-[#2350f6]">STUDIO</span>
+            {/* Navbar Minimalista */}
+            <header className="container mx-auto px-6 py-6 flex justify-between items-center bg-white sticky top-0 z-50">
+                <div className="flex items-center gap-2">
+                    {/* Logo Simulado Prophero Style */}
+                    <div className="w-8 h-8 bg-[#2050f6] rounded-lg flex items-center justify-center text-white font-bold text-xl">U</div>
+                    <span className="font-bold text-xl tracking-tight">Unreal<span className="text-[#2050f6]">Studio</span></span>
                 </div>
-                <a 
-                    href="https://wa.me/34600000000" // Reemplazar con número real
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hidden md:flex items-center gap-2 text-green-600 font-bold hover:text-green-700 transition"
-                >
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" className="w-6 h-6" />
-                    +34 600 000 000
+                <a href="#book" className="hidden md:block bg-[#2050f6] text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition">
+                    Sesión Gratuita
                 </a>
             </header>
 
-            {/* HERO SECTION: Estilo Prophero (Split o Centrado agresivo) */}
-            <section className="relative pt-8 pb-16 lg:pt-16 lg:pb-24 overflow-hidden">
-                <div className="container mx-auto px-4">
-                    <div className="flex flex-col lg:flex-row items-center gap-12">
+            {/* HERO SECTION - REPLICA EXACTA DE ESTRUCTURA */}
+            <section className="pt-12 pb-20 lg:pt-24 lg:pb-32 overflow-hidden" style={{ backgroundColor: colors.bgHero }}>
+                <div className="container mx-auto px-6">
+                    <div className="flex flex-col lg:flex-row items-center gap-16">
                         
-                        {/* Copy de Venta */}
-                        <div className="lg:w-1/2 space-y-6 z-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-sm font-bold border border-blue-100">
-                                <Star size={14} fill="currentColor" /> Selección Premium Casa Palmers
+                        {/* Izquierda: Copy */}
+                        <div className="lg:w-1/2 space-y-8">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-[#2050f6] text-sm font-bold shadow-sm border border-blue-100">
+                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                                +100 Operaciones/mes (Ref. Prophero)
                             </div>
-                            <h1 className="text-4xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight text-[#111827]">
-                                Villa de Lujo en Melasti (Uluwatu) por <span className="text-[#2350f6] bg-blue-50 px-2 rounded-lg">$159,000</span>
-                            </h1>
-                            <p className="text-lg text-gray-600 leading-relaxed max-w-xl">
-                                Accede a la zona más exclusiva de Bali con una rentabilidad proyectada del <strong className="text-green-600">19.74% anual</strong>. 3 Habitaciones, piscina privada y gestión integral.
-                            </p>
                             
-                            <div className="grid grid-cols-2 gap-4 py-4">
-                                {[
-                                    { icon: TrendingUp, text: "ROI Neto 19.74%" },
-                                    { icon: Shield, text: "Propiedad Leasehold Segura" },
-                                    { icon: Users, text: "Gestión Casa Palmers" },
-                                    { icon: MapPin, text: "Melasti, Uluwatu (Beachfront)" }
-                                ].map((item, i) => (
-                                    <div key={i} className="flex items-center gap-3">
-                                        <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
-                                            <item.icon size={20} />
-                                        </div>
-                                        <span className="font-semibold text-sm">{item.text}</span>
+                            <h1 className="text-5xl lg:text-[3.5rem] font-extrabold leading-[1.1] tracking-tight text-black">
+                                Invierte en las villas más rentables de Bali por <span className="text-[#2050f6]">$159,000</span>
+                            </h1>
+                            
+                            <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
+                                Olvídate de rendimientos bajos. Casa Palmers te ofrece <strong>19.74% ROI Neto</strong> en Melasti, Uluwatu. Gestión 100% pasiva.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                                <a href="#book" className="px-8 py-4 bg-[#2050f6] text-white font-bold text-lg rounded-lg shadow-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                                    Sesión gratuita de inversión <ArrowRight size={20} />
+                                </a>
+                                <div className="flex items-center gap-[-10px] px-4">
+                                    <div className="flex -space-x-3">
+                                        {[1,2,3].map(i => (
+                                            <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center overflow-hidden">
+                                                <img src={`https://randomuser.me/api/portraits/men/${30+i}.jpg`} alt="User" />
+                                            </div>
+                                        ))}
                                     </div>
+                                    <div className="ml-4 text-sm font-medium">
+                                        <div className="flex text-yellow-400">★★★★★</div>
+                                        <span className="text-gray-500">+450 Inversores</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Derecha: Imagen/Video (Estilo Prophero Landing Bakery) */}
+                        <div className="lg:w-1/2 relative">
+                            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform rotate-1 hover:rotate-0 transition duration-500">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1604014237800-1c9102c219da?q=80&w=1000&auto=format&fit=crop" 
+                                    alt="Villa Melasti Hyperrealistic" 
+                                    className="w-full h-auto object-cover"
+                                />
+                                {/* Floating Badge */}
+                                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-3 rounded-xl shadow-lg flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold">
+                                        <TrendingUp size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs text-gray-500 uppercase font-bold">Rentabilidad Actual</p>
+                                        <p className="text-lg font-bold text-gray-900">19.74% Neto</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* Decorative Blob */}
+                            <div className="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-200/30 blur-3xl rounded-full"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            {/* SECCIÓN "POR QUÉ BALI" - Estilo Grid Limpio */}
+            <section className="py-24 bg-white">
+                <div className="container mx-auto px-6">
+                    <div className="text-center max-w-3xl mx-auto mb-20">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6">Deja la inversión en Bali en nuestras manos</h2>
+                        <p className="text-xl text-gray-500">Nos encargamos de absolutamente todo. Desde la construcción hasta el último huésped.</p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-12">
+                        {[
+                            {
+                                title: "Encuentra",
+                                desc: "Seleccionamos suelo premium en Melasti (Uluwatu) antes que el mercado.",
+                                icon: MapPin
+                            },
+                            {
+                                title: "Construye",
+                                desc: "Desarrollamos villas de lujo optimizadas para alquiler vacacional (3 Habitaciones).",
+                                icon: HomeIcon
+                            },
+                            {
+                                title: "Gestiona",
+                                desc: "Operación hotelera completa. Tú recibes transferencias trimestrales.",
+                                icon: CheckCircle
+                            }
+                        ].map((item, i) => (
+                            <div key={i} className="flex flex-col items-center text-center group">
+                                <div className="w-20 h-20 bg-[#f3f5fe] rounded-2xl flex items-center justify-center text-[#2050f6] mb-6 group-hover:scale-110 transition duration-300">
+                                    <item.icon size={36} strokeWidth={1.5} />
+                                </div>
+                                <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
+                                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* SECCIÓN DE DATOS - "HARD FACTS" */}
+            <section className="py-20 bg-gray-50 border-y border-gray-100">
+                <div className="container mx-auto px-6">
+                    <div className="grid lg:grid-cols-2 gap-16 items-center">
+                        <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 bg-[#2050f6] text-white px-4 py-1 rounded-bl-xl font-bold text-sm">CASA PALMERS</div>
+                            <h3 className="text-2xl font-bold mb-6">Ficha Técnica: Melasti Villas</h3>
+                            <ul className="space-y-6">
+                                {[
+                                    { label: "Precio Inversor", val: "$159,000", highlight: true },
+                                    { label: "Precio Público (Exit)", val: "$206,700", highlight: false },
+                                    { label: "ROI Estimado", val: "19.74%", highlight: true, color: "text-green-600" },
+                                    { label: "Ubicación", val: "Melasti, Uluwatu", highlight: false },
+                                    { label: "Entrega", val: "10-12 Meses", highlight: false }
+                                ].map((row, j) => (
+                                    <li key={j} className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0">
+                                        <span className="text-gray-500 font-medium">{row.label}</span>
+                                        <span className={`font-bold text-lg ${row.color || 'text-gray-900'} ${row.highlight ? 'bg-[#f3f5fe] px-2 py-1 rounded' : ''}`}>{row.val}</span>
+                                    </li>
                                 ))}
-                            </div>
-
-                            <div className="flex items-center gap-4 text-sm text-gray-500">
-                                <div className="flex -space-x-2">
-                                    {[1,2,3,4].map(i => (
-                                        <img key={i} src={`https://randomuser.me/api/portraits/men/${20+i}.jpg`} alt="Investor" className="w-8 h-8 rounded-full border-2 border-white" />
-                                    ))}
-                                </div>
-                                <p>Unidades limitadas a este precio de inversor.</p>
-                            </div>
+                            </ul>
                         </div>
-
-                        {/* Formulario Flotante (Clave Prophero) */}
-                        <div className="lg:w-1/2 w-full">
-                            <div className="bg-white rounded-2xl shadow-2xl shadow-blue-900/10 border border-gray-100 p-6 lg:p-8 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 bg-[#facc15] text-black text-xs font-bold px-3 py-1 rounded-bl-lg">
-                                    PRECIO INVERSOR
+                        
+                        <div>
+                            <h2 className="text-3xl font-bold mb-6">¿Por qué este proyecto?</h2>
+                            <div className="space-y-8">
+                                <div className="flex gap-4">
+                                    <div className="mt-1"><div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-[#2050f6] font-bold">1</div></div>
+                                    <div>
+                                        <h4 className="font-bold text-lg mb-2">Zona de Máxima Revalorización</h4>
+                                        <p className="text-gray-600">Melasti es el nuevo "Millionaire's Row" de Bali. Comprar aquí a $159k es entrar con equity instantáneo.</p>
+                                    </div>
                                 </div>
-                                <h3 className="text-2xl font-bold mb-2 text-[#111827]">Solicita el Dossier "Melasti"</h3>
-                                <p className="text-gray-500 text-sm mb-6">Recibe planos detallados, tabla financiera de Casa Palmers y disponibilidad actual.</p>
-                                <LeadForm />
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                {/* Background Decor */}
-                <div className="absolute top-0 right-0 w-1/2 h-full bg-[#f0fdf4] -z-10 skew-x-12 translate-x-32 hidden lg:block opacity-50" />
-            </section>
-
-            {/* VIDEO / VISUAL BREAK */}
-            <section className="bg-[#111827] text-white py-12 overflow-hidden">
-                <div className="container mx-auto px-4 text-center mb-8">
-                    <p className="text-blue-400 font-bold tracking-widest uppercase text-xs">Ubicación Premium</p>
-                    <h2 className="text-3xl font-bold mt-2">A minutos de Melasti Beach</h2>
-                </div>
-                <div className="container mx-auto px-4 max-w-5xl">
-                    <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl border border-gray-800 group cursor-pointer">
-                        <img 
-                            src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2038&auto=format&fit=crop" 
-                            alt="Melasti Beach Uluwatu" 
-                            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-700"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition duration-300">
-                                <div className="w-16 h-16 bg-[#2350f6] rounded-full flex items-center justify-center shadow-lg">
-                                    <Play fill="white" size={32} className="ml-1" />
+                                <div className="flex gap-4">
+                                    <div className="mt-1"><div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-[#2050f6] font-bold">2</div></div>
+                                    <div>
+                                        <h4 className="font-bold text-lg mb-2">Producto "No-Brainer"</h4>
+                                        <p className="text-gray-600">3 Habitaciones por el precio de 1 en Canggu. Ideal para familias y grupos, el nicho más rentable.</p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-4">
+                                    <div className="mt-1"><div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-[#2050f6] font-bold">3</div></div>
+                                    <div>
+                                        <h4 className="font-bold text-lg mb-2">Seguridad Total</h4>
+                                        <p className="text-gray-600">Estructura legal PT PMA, notario internacional y Due Diligence completa realizada por Casa Palmers.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="absolute bottom-6 left-6">
-                            <span className="bg-black/50 backdrop-blur text-white px-3 py-1 rounded text-sm font-medium">📍 Melasti, Uluwatu</span>
-                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* VALUE PROPOSITION MATRIX */}
-            <section className="py-20 bg-gray-50">
-                <div className="container mx-auto px-4">
-                    <div className="text-center max-w-2xl mx-auto mb-16">
-                        <h2 className="text-3xl lg:text-4xl font-bold text-[#111827] mb-4">¿Por qué Casa Palmers en Melasti?</h2>
-                        <p className="text-gray-600">Una selección estratégica en la zona de mayor revalorización de Bali, superando los retornos de Canggu.</p>
+            {/* CTA FINAL - FORMULARIO */}
+            <section id="book" className="py-24 bg-[#f3f5fe]">
+                <div className="container mx-auto px-6 max-w-4xl">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl md:text-5xl font-extrabold mb-6">Reserva una sesión gratuita</h2>
+                        <p className="text-xl text-gray-600">Analicemos si esta inversión encaja en tu portfolio. Sin compromiso.</p>
                     </div>
-
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {/* Card 1 */}
-                        <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-gray-100">
-                            <div className="w-12 h-12 bg-blue-100 text-[#2350f6] rounded-lg flex items-center justify-center mb-6">
-                                <TrendingUp size={24} />
-                            </div>
-                            <h3 className="text-xl font-bold mb-3">ROI Líder: 19.74%</h3>
-                            <p className="text-gray-600 text-sm">Nuestras villas de 3 habitaciones en Melasti ofrecen un rendimiento superior gracias a la alta demanda de familias y grupos en Uluwatu.</p>
-                        </div>
-                        {/* Card 2 */}
-                        <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-gray-100">
-                            <div className="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-6">
-                                <Shield size={24} />
-                            </div>
-                            <h3 className="text-xl font-bold mb-3">Precio "Investor"</h3>
-                            <p className="text-gray-600 text-sm">Entras a <strong>$159,000</strong>. El precio público de venta proyectado es $206,700. Obtienes plusvalía inmediata.</p>
-                        </div>
-                        {/* Card 3 */}
-                        <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-gray-100">
-                            <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-6">
-                                <Users size={24} />
-                            </div>
-                            <h3 className="text-xl font-bold mb-3">Gestión Integral</h3>
-                            <p className="text-gray-600 text-sm">Casa Palmers se encarga de la comercialización, mantenimiento y huéspedes. Inversión pasiva real.</p>
-                        </div>
+                    
+                    <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl">
+                        <SessionForm />
                     </div>
                 </div>
             </section>
 
-            {/* COMPARISON TABLE */}
-            <section className="py-20 bg-white">
-                <div className="container mx-auto px-4 max-w-4xl">
-                    <h2 className="text-3xl font-bold text-center mb-12">Comparativa de Mercado</h2>
-                    <div className="overflow-hidden rounded-xl border border-gray-200">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-gray-50 text-sm uppercase tracking-wide text-gray-500">
-                                    <th className="p-4 border-b">Concepto</th>
-                                    <th className="p-4 border-b font-bold text-[#2350f6]">Melasti Villas (Casa Palmers)</th>
-                                    <th className="p-4 border-b text-gray-400">Propiedad Estándar España</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-100 text-sm md:text-base">
-                                <tr>
-                                    <td className="p-4 font-semibold text-gray-700">Inversión Inicial</td>
-                                    <td className="p-4 bg-blue-50/50 font-bold text-[#111827]">$159,000</td>
-                                    <td className="p-4 text-gray-500">€250,000+</td>
-                                </tr>
-                                <tr>
-                                    <td className="p-4 font-semibold text-gray-700">Rentabilidad (ROI)</td>
-                                    <td className="p-4 bg-blue-50/50 font-bold text-green-600">19.74%</td>
-                                    <td className="p-4 text-gray-500">3% - 5%</td>
-                                </tr>
-                                <tr>
-                                    <td className="p-4 font-semibold text-gray-700">Ubicación</td>
-                                    <td className="p-4 bg-blue-50/50 font-bold text-[#111827]">Uluwatu (High Demand)</td>
-                                    <td className="p-4 text-gray-500">Periferia Urbana</td>
-                                </tr>
-                                <tr>
-                                    <td className="p-4 font-semibold text-gray-700">Potencial Reventa</td>
-                                    <td className="p-4 bg-blue-50/50 font-bold text-[#111827]">Alto (Zona en auge)</td>
-                                    <td className="p-4 text-gray-500">Moderado</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            {/* FOOTER CTA */}
-            <section className="py-20 bg-[#172554] text-white text-center px-4">
-                <h2 className="text-3xl md:text-5xl font-bold mb-6">Asegura tu unidad en Melasti</h2>
-                <p className="text-xl text-blue-200 mb-8 max-w-2xl mx-auto">Solo quedan 2 unidades de 3 Habitaciones a precio de inversor ($159k).</p>
-                <div className="flex flex-col md:flex-row justify-center gap-4">
-                    <a href="#top" className="bg-[#00c853] hover:bg-green-600 text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:-translate-y-1 transition-transform flex items-center justify-center gap-2">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" className="w-6 h-6" />
-                        RESERVAR CONSULTA
-                    </a>
-                </div>
-            </section>
-
-            {/* Simple Footer */}
-            <footer className="bg-[#0f172a] text-gray-400 py-8 text-sm text-center">
-                <div className="container mx-auto px-4">
-                    <p>&copy; {new Date().getFullYear()} Unreal Studio & Casa Palmers. Todos los derechos reservados.</p>
-                    <div className="flex justify-center gap-4 mt-4">
-                        <Link to="/privacidad" className="hover:text-white">Privacidad</Link>
-                        <Link to="/terminos" className="hover:text-white">Términos</Link>
-                    </div>
-                </div>
+            <footer className="bg-white border-t border-gray-200 py-12 text-center text-gray-500 text-sm">
+                <p>© 2026 Unreal Studio & Casa Palmers. Todos los derechos reservados.</p>
             </footer>
         </div>
     );
 };
+
+// Helper icon wrapper if Home is missing in imports
+const HomeIcon = (props) => (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+);
 
 export default LandingPropheroClone;
