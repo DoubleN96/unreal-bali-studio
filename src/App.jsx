@@ -15,6 +15,7 @@ import BlogDetail from './pages/BlogDetail';
 import { DEFAULT_CONFIG } from './constants';
 
 import Invest from './pages/Invest';
+import LandingPropheroClone from './pages/LandingPropheroClone';
 
 const CurrencyContext = createContext(undefined);
 
@@ -40,7 +41,7 @@ const Layout = ({ children }) => {
     const location = useLocation();
     const isAdminPath = location.pathname.startsWith('/admin');
     // Hide navbar/footer for the landing page to keep it focused (like standard LPs)
-    const isLandingPage = location.pathname === '/invest'; 
+    const isLandingPage = location.pathname === '/invest' || location.pathname === '/oferta-bali'; 
     
     return (
         <div className="flex flex-col min-h-screen">
@@ -106,6 +107,7 @@ const App = () => {
                         <Route path="/proyectos" element={<Projects />} />
                         <Route path="/proyecto/:id" element={<ProjectDetail />} />
                         <Route path="/invest" element={<Invest />} />
+                        <Route path="/oferta-bali" element={<LandingPropheroClone />} />
                         <Route path="/blog" element={<Blog />} />
                         <Route path="/blog/:id" element={<BlogDetail />} />
                         <Route path="/contacto" element={<Contact />} />
